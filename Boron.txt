@@ -1,0 +1,81 @@
+INCLUDE 'EMU8086.INC'
+.MODEL SMALL
+.STACK 100h
+.DATA        
+    ARR DB 50 DUP(?) 
+
+.CODE
+    MAIN PROC
+        MOV AX,@DATA
+        MOV DS,AX
+        XOR BX,BX
+        XOR CX,CX
+        
+        PRINT "Numbers we want to store: "
+        MOV AH,1
+        INT 21H
+        AND AL,0FH
+        MOV CL,AL
+        MOV BL,AL
+        MOV SI,0
+        PRINTN
+        PRINT "Enter values: "
+        PRINTN
+        INPUT:
+           INT 21H
+           MOV ARR[SI],AL
+           INC SI
+           LOOP INPUT
+        PRINTN
+        PRINT "Output: "
+        PRINTN
+        
+        MOV CX,BX
+        MOV SI,0
+        MOV AH,2  
+        OUTPUT:
+            CMP ARR[SI],50
+            JZ ANS
+            INC SI
+           LOOP OUTPUT
+        ANS: 
+            MOV DL,ARR[SI]
+            INT 21h
+        
+        MOV CX,BX
+        MOV SI,0
+        MOV AH,2  
+        OUTPUT1:
+            CMP ARR[SI],51
+            JZ ANS1
+            INC SI
+           LOOP OUTPUT1
+        ANS1: 
+            MOV DL,ARR[SI]
+            INT 21h         
+       
+       MOV CX,BX
+        MOV SI,0
+        MOV AH,2  
+        OUTPUT2:
+            CMP ARR[SI],53
+            JZ ANS2
+            INC SI
+           LOOP OUTPUT2
+        ANS2: 
+            MOV DL,ARR[SI]
+            INT 21h
+            
+        MOV CX,BX
+        MOV SI,0
+        MOV AH,2  
+        OUTPUT3:
+            CMP ARR[SI],55
+            JZ ANS3
+            INC SI
+           LOOP OUTPUT3
+        ANS3: 
+            MOV DL,ARR[SI]
+            INT 21h
+  MAIN ENDP
+END MAIN
